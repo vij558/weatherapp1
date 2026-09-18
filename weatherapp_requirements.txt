@@ -1,0 +1,6 @@
+# Weather App dependencies
+# Install with: python -m pip install -r weatherapp_requirements.txt
+
+requests
+python-dotenv
+streamlit
