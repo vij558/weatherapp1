@@ -37,8 +37,10 @@ def get_weather(city_name):
             "city": data["name"],
             "country": data["sys"]["country"],
             "temperature": data["main"]["temp"],
+            "feels_like": data["main"]["feels_like"],
             "condition": data["weather"][0]["main"],
             "humidity": data["main"]["humidity"],
+            "pressure": data["main"]["pressure"],
             "wind_speed": data["wind"]["speed"],
         }
 
@@ -52,11 +54,11 @@ def get_weather(city_name):
 
 
 st.set_page_config(
-    page_title="Weather App",
+    page_title="Weather Dashboard",
     layout="centered",
 )
 
-st.title("Weather App")
+st.title("Weather Dashboard")
 st.write("Check the current weather for any city.")
 
 city_name = st.text_input(
@@ -84,15 +86,40 @@ if st.button("Get Weather", type="primary"):
                 f"{weather['city']}, {weather['country']}"
             )
 
-            st.write(
-                f"**Temperature:** {weather['temperature']:.1f} °C"
-            )
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric(
+                    "Temperature",
+                    f"{weather['temperature']:.1f} °C",
+                )
+
+            with col2:
+                st.metric(
+                    "Humidity",
+                    f"{weather['humidity']}%",
+                )
+
+            with col3:
+                st.metric(
+                    "Wind Speed",
+                    f"{weather['wind_speed']} m/s",
+                )
+
+            col4, col5 = st.columns(2)
+
+            with col4:
+                st.metric(
+                    "Feels Like",
+                    f"{weather['feels_like']:.1f} °C",
+                )
+
+            with col5:
+                st.metric(
+                    "Pressure",
+                    f"{weather['pressure']} hPa",
+                )
+
             st.write(
                 f"**Weather Condition:** {weather['condition']}"
-            )
-            st.write(
-                f"**Humidity:** {weather['humidity']}%"
-            )
-            st.write(
-                f"**Wind Speed:** {weather['wind_speed']} m/s"
             )
